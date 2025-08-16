@@ -17,10 +17,7 @@ jobs:
           cache: "pnpm"
       - run: mkdir mutation-test-results
       - run: pnpm run stryker
-      - run: |
-          cd mutation-test-results
-          cp /home/runner/work/genesys-icons/genesys-icons/reports/mutation/mutation.html stryker-report.html
-          cd ..
+      - run: cp $GITHUB_WORKSPACE/reports/mutation/mutation.html $GITHUB_WORKSPACE/mutation-test-result/stryker-report.html
       - uses: actions/upload-artifact@v4
         with:
           name: mutation-test-results
