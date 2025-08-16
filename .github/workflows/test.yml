@@ -12,5 +12,9 @@ jobs:
         with:
           version: latest
       - uses: ./.github/workflows/cache
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: "pnpm"
       - run: pnpm lint
       - run: pnpm test

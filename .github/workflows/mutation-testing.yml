@@ -3,7 +3,7 @@ on:
   workflow_call:
 
 jobs:
-  test:
+  mutation-testing:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
@@ -12,6 +12,10 @@ jobs:
         with:
           version: latest
       - uses: ./.github/workflows/cache
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: "pnpm"
       - run: mkdir mutation-test-results
       - run: pnpm run stryker
       - run: |
