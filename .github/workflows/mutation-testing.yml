@@ -1,0 +1,24 @@
+name: mutation-testing
+on:
+  workflow_call:
+
+jobs:
+  test:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - uses: ./.github/workflows/cache
+      - run: mkdir mutation-test-results
+      - run: pnpm run stryker
+      - run: |
+          cd mutation-test-results
+          cp /home/runner/work/genesys-icons/genesys-icons/reports/mutation/mutation.html stryker-report.html
+          cd ..
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mutation-test-results
+          path: mutation-test-results
