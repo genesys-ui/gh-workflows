@@ -1,0 +1,20 @@
+name: cache
+description: "Set cache"
+runs:
+  using: "composite"
+  steps:
+    - name: Cache dependencies
+      id: cache-dependencies
+      uses: actions/cache@v4
+      with:
+        path: node_modules
+        key: node-modules-${{ hashFiles('package-lock.json') }}
+
+    - name: Cache dist
+      id: cache-dist
+      uses: actions/cache@v4
+      with:
+        path: |
+          dist
+          **/dist
+        key: ${{ runner.os }}-cache-dist-${{ github.sha }}
