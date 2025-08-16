@@ -19,7 +19,7 @@ jobs:
       - uses: pnpm/action-setup@v4
         with:
           version: latest
-      - uses: genesys-ui/gh-workflows/.github/workflows/cache
+      - uses: genesys-ui/gh-workflows/.github/workflows/cache@main
       - uses: actions/setup-node@v4
         with:
           node-version: latest
