@@ -1,0 +1,37 @@
+name: deploy
+on:
+  workflow_call:
+
+jobs:
+  deploy:
+    needs: [test]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+      - name: Cache build
+        id: cache-build
+        uses: actions/cache@v4
+        with:
+          path: |
+            dist
+            **/dist
+          key: ${{ runner.os }}-cache-build-${{ github.sha }}
+      - run: pnpm build-storybook
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./storybook-static"
+      - uses: actions/deploy-pages@v4

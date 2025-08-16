@@ -1,0 +1,30 @@
+name: test
+on:
+  workflow_call:
+
+jobs:
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: Cache dependencies
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+      - name: Cache build
+        id: cache-build
+        uses: actions/cache@v4
+        with:
+          path: |
+            dist
+            **/dist
+          key: ${{ runner.os }}-cache-build-${{ github.sha }}
+      - run: pnpm lint
+      - run: pnpm test
+
