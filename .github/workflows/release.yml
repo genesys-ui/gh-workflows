@@ -27,5 +27,5 @@ jobs:
       - run: |
           git config --global user.name 'Genesys UI GitHub Action'
           git config --global user.email 'ci@genesys-ui.dev'
-      - name: Publish ${{ inputs.version }}${{ inputs.dry == 'true' && ' (--dry-run)' || '' }}
-        run: pnpm run release -- ${{ inputs.version != 'auto' && inputs.version || '' }}${{ inputs.dry == 'true' && ' --dry-run' || '' }} --ci
+      - name: Publish ${{ inputs.version }}${{ inputs.dry && ' (--dry-run)' || '' }}
+        run: pnpm run release -- ${{ inputs.version != 'auto' && inputs.version || '' }}${{ inputs.dry && ' --dry-run' || '' }} --ci
