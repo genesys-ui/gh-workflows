@@ -8,14 +8,8 @@ jobs:
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: latest
+      - uses: genesys-ui/gh-workflows/actions/setup-node@main
       - uses: genesys-ui/gh-workflows/actions/cache@main
-      - uses: actions/setup-node@v4
-        with:
-          node-version: latest
-          cache: "pnpm"
       - run: mkdir mutation-test-results
       - run: pnpm run stryker
       - run: cp $GITHUB_WORKSPACE/reports/mutation/mutation.html $GITHUB_WORKSPACE/mutation-test-result/stryker-report.html

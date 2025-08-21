@@ -12,23 +12,12 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: pnpm/action-setup@v4
-        with:
-          version: latest
+      - uses: genesys-ui/gh-workflows/actions/setup-node@main
       - uses: genesys-ui/gh-workflows/actions/cache@main
-      - uses: actions/setup-node@v4
-        with:
-          node-version: latest
-          cache: "pnpm"
-      - run: |
-          git config --global user.name 'Genesys UI GitHub Action'
-          git config --global user.email 'ci@genesys-ui.dev'
+      - run: pnpm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
       - name: Publish ${{ inputs.version }}${{ inputs.dry && ' (--dry-run)' || '' }}
-        run: pnpm run release -- ${{ inputs.version != 'auto' && inputs.version || '' }}${{ inputs.dry && ' --dry-run' || '' }} --ci
+        run: npx release-it --verbose --increment=${{ inputs.version }}${{ inputs.dry && ' --dry-run' || '' }} --ci
