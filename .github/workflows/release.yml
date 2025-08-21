@@ -19,6 +19,10 @@ jobs:
       - uses: genesys-ui/gh-workflows/actions/setup-node@main
       - uses: genesys-ui/gh-workflows/actions/cache@main
       - run: pnpm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Publish ${{ inputs.version }}${{ inputs.dry && ' (--dry-run)' || '' }}
         run: npx release-it ${{ inputs.version != 'auto' && inputs.version || '' }}${{ inputs.dry && ' --dry-run' || '' }} --ci --verbose
         env:
