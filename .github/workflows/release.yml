@@ -20,4 +20,6 @@ jobs:
       - uses: genesys-ui/gh-workflows/actions/cache@main
       - run: pnpm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
       - name: Publish ${{ inputs.version }}${{ inputs.dry && ' (--dry-run)' || '' }}
-        run: npx release-it --verbose --increment=${{ inputs.version }}${{ inputs.dry && ' --dry-run' || '' }} --ci
+        run: npx release-it ${{ inputs.version != 'auto' && inputs.version || '' }}${{ inputs.dry && ' --dry-run' || '' }} --ci --verbose
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
