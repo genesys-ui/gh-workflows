@@ -10,10 +10,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: genesys-ui/gh-workflows/actions/setup-node@main
       - uses: genesys-ui/gh-workflows/actions/cache@main
-      - run: mkdir mutation-test-results
+      # - run: mkdir mutation-test-results
       - run: npx stryker run
-      - run: cp $GITHUB_WORKSPACE/reports/mutation/mutation.html $GITHUB_WORKSPACE/mutation-test-result/stryker-report.html
+      # - run: mv $GITHUB_WORKSPACE/reports/mutation/mutation.html $GITHUB_WORKSPACE/mutation-test-result/stryker-report.html
       - uses: actions/upload-artifact@v4
         with:
           name: mutation-test-results
-          path: mutation-test-results
+          path: reports/mutation
