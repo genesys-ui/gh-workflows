@@ -11,7 +11,7 @@ jobs:
       - uses: genesys-ui/gh-workflows/actions/setup-node@main
       - uses: genesys-ui/gh-workflows/actions/cache@main
       - run: mkdir mutation-test-results
-      - run: pnpm run stryker
+      - run: npx stryker run
       - run: cp $GITHUB_WORKSPACE/reports/mutation/mutation.html $GITHUB_WORKSPACE/mutation-test-result/stryker-report.html
       - uses: actions/upload-artifact@v4
         with:

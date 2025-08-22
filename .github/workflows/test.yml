@@ -10,4 +10,4 @@ jobs:
       - uses: genesys-ui/gh-workflows/actions/setup-node@main
       - uses: genesys-ui/gh-workflows/actions/cache@main
       - run: pnpm lint
-      - run: pnpm test
+      - run: pnpm test -- --coverage
