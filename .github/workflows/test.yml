@@ -9,5 +9,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: genesys-ui/gh-workflows/actions/setup-node@main
       - uses: genesys-ui/gh-workflows/actions/cache@main
-      - run: pnpm lint
-      - run: pnpm test -- --coverage
+      - run: pnpm run --if-present lint # if only test exists don't break
+      - run: pnpm run --if-present test -- --coverage # if only lint exists don't break
